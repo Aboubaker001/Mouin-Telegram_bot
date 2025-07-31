@@ -6,6 +6,7 @@ import userinfo from '../commands/userinfo.js';
 import done from '../commands/done.js';
 import messageHandler from '../handlers/messageHandler.js';
 import logger from '../middlewares/logger.js';
+import { clearUserState } from '../utils/helpers.js';
 
 export function setupBot(bot) {
   // Apply middleware
@@ -19,21 +20,31 @@ export function setupBot(bot) {
   bot.command('userinfo', userinfo);
   bot.command('done', done);
   
+  // Cancel command to exit conversation states
+  bot.command('cancel', (ctx) => {
+    clearUserState(ctx.from.id);
+    ctx.reply("✅ تم إلغاء العملية الحالية.");
+  });
+  
   // Help command
   bot.command('help', (ctx) => ctx.reply(
     "📚 استخدم الأوامر التالية:\n" +
     "/start - لبدء استخدام البوت والتسجيل\n" +
-    "/add - لإضافة تكليف\n" +
+    "/add - لإضافة تكليف جديد\n" +
+    "/view - لعرض التكليفات النشطة\n" +
+    "/done - لتأكيد إنجاز التكليف\n" +
     "/remove - لإزالة تكليف\n" +
-    "/view - لعرض التكليفات\n" +
     "/userinfo - لعرض معلومات المستخدم\n" +
-    "/done - لتأكيد إنجاز التكليف"
+    "/cancel - لإلغاء العملية الحالية\n\n" +
+    "💡 نصيحة: يمكنك إضافة تكليف بطريقتين:\n" +
+    "1️⃣ /add ثم أرسل البيانات في رسالة منفصلة\n" +
+    "2️⃣ /add العنوان | النوع | الموعد (كله في رسالة واحدة)"
   ));
 
   // Handle unknown commands
   bot.on('text', (ctx) => {
     if (ctx.message.text.startsWith('/')) {
-      ctx.reply("📚 استخدم الأمر /help لعرض قائمة الأوامر المتاحة.");
+      ctx.reply("📚 أمر غير معروف. استخدم الأمر /help لعرض قائمة الأوامر المتاحة.");
     }
   });
 

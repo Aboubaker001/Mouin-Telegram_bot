@@ -25,10 +25,22 @@ export function getPendingTasks() {
 
 // Add a new assignment
 export function addAssignment(assignment) {
-  const assignments = getAllAssignments();
-  assignments.push(assignment);
-  writeJSON(ASSIGNMENTS_FILE, assignments);
-  return assignment;
+  try {
+    const assignments = getAllAssignments();
+    assignments.push(assignment);
+    const success = writeJSON(ASSIGNMENTS_FILE, assignments);
+    
+    if (success) {
+      console.log(`Assignment added: ${assignment.title} (ID: ${assignment.id})`);
+      return true;
+    } else {
+      console.error('Failed to save assignment to file');
+      return false;
+    }
+  } catch (error) {
+    console.error('Error adding assignment:', error);
+    return false;
+  }
 }
 
 // Remove an assignment
