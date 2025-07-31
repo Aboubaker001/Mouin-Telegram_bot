@@ -1,12 +1,13 @@
 {
   "name": "muin-almujtahidin-bot",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "main": "index.js",
+  "main": "arabic-bot.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js",
-    "test": "echo \"No tests yet\" && exit 0"
+    "start": "node arabic-bot.js",
+    "dev": "node --watch arabic-bot.js",
+    "old-bot": "node index.js",
+    "test": "echo \"البوت العربي الجديد!\" && exit 0"
   },
   "dependencies": {
     "telegraf": "^4.16.3",
@@ -18,8 +19,26 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "description": "Modern Telegram bot for managing study assignments and reminders for Arab students",
-  "keywords": ["telegram", "bot", "education", "assignments", "reminders", "arabic"],
+  "description": "بوت تلجرام متطور لإدارة الدورات التعليمية باللغة العربية مع ميزات شاملة للطلاب والمشرفين",
+  "keywords": [
+    "telegram", 
+    "bot", 
+    "education", 
+    "arabic", 
+    "course-management",
+    "scheduling",
+    "reminders",
+    "quiz",
+    "user-management"
+  ],
   "author": "Muin Al-Mujtahidin Team",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/muin-almujtahidin-bot"
+  },
+  "bugs": {
+    "url": "https://github.com/your-repo/muin-almujtahidin-bot/issues"
+  },
+  "homepage": "https://github.com/your-repo/muin-almujtahidin-bot#readme"
 }
