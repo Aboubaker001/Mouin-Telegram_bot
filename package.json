@@ -1,0 +1,20 @@
+{
+  "name": "muin-almujtahidin-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "node-schedule": "^2.1.1",
+    "telegraf": "^4.16.3",
+    "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0"
+  },
+  "description": "Telegram bot for managing study assignments and reminders.",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
