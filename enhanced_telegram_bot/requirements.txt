@@ -1,0 +1,48 @@
+# Enhanced Telegram Bot Requirements
+# Core Bot Framework
+aiogram==3.4.1
+
+# Database
+aiosqlite==0.19.0
+
+# Configuration Management
+pydantic==2.5.3
+python-dotenv==1.0.0
+
+# Scheduling
+APScheduler==3.10.4
+
+# Timezone Support
+pytz==2023.3
+
+# HTTP Requests (for external APIs)
+aiohttp==3.9.1
+
+# Google Sheets Integration (Optional)
+google-api-python-client==2.112.0
+google-auth-httplib2==0.2.0
+google-auth-oauthlib==1.2.0
+
+# Image Processing (Optional)
+Pillow==10.1.0
+
+# Text Processing
+python-magic==0.4.27
+
+# Logging and Monitoring
+structlog==23.2.0
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# Security
+cryptography==41.0.8
+
+# File handling
+python-multipart==0.0.6
+
+# Development Tools
+black==23.12.0
+flake8==6.1.0
+isort==5.13.2
