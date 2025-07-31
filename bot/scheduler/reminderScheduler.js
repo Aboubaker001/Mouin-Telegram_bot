@@ -90,14 +90,23 @@ function scheduleAssignmentReminders(bot) {
 }
 
 async function sendReminderToAllUsers(bot, message) {
-  const users = getAllUsers();
-  
-  for (const user of users) {
-    try {
-      await bot.telegram.sendMessage(user.id, message);
-      console.log(`📅 Weekly reminder sent to user ${user.id}`);
-    } catch (error) {
-      console.error(`❌ Failed to send reminder to user ${user.id}:`, error);
+  try {
+    const users = getAllUsers();
+    
+    if (users.length === 0) {
+      console.log('No users to send reminders to');
+      return;
     }
+    
+    for (const user of users) {
+      try {
+        await bot.telegram.sendMessage(user.id, message);
+        console.log(`📅 Weekly reminder sent to user ${user.id}`);
+      } catch (error) {
+        console.error(`❌ Failed to send reminder to user ${user.id}:`, error);
+      }
+    }
+  } catch (error) {
+    console.error('❌ Error in sendReminderToAllUsers:', error);
   }
 }
