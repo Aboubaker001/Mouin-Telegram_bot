@@ -1,25 +1,46 @@
 {
   "name": "muin-almujtahidin-bot",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "test": "echo \"No tests yet\" && exit 0"
+    "test": "echo \"No tests yet\" && exit 0",
+    "setup": "node setup.js"
   },
   "dependencies": {
     "telegraf": "^4.16.3",
     "dotenv": "^16.6.1",
     "node-cron": "^3.0.3",
     "date-fns": "^2.30.0",
-    "date-fns-tz": "^2.0.0"
+    "date-fns-tz": "^2.0.0",
+    "cron": "^3.1.6"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "description": "Modern Telegram bot for managing study assignments and reminders for Arab students",
-  "keywords": ["telegram", "bot", "education", "assignments", "reminders", "arabic"],
+  "description": "Modern Telegram bot for managing educational courses with Arabic language support, featuring user verification, content management, automated reminders, quizzes, and comprehensive statistics",
+  "keywords": [
+    "telegram", 
+    "bot", 
+    "education", 
+    "course-management", 
+    "arabic", 
+    "e-learning",
+    "reminders",
+    "quizzes",
+    "statistics",
+    "content-management"
+  ],
   "author": "Muin Al-Mujtahidin Team",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aboubaker001/Mouin-Telegram_bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Aboubaker001/Mouin-Telegram_bot/issues"
+  },
+  "homepage": "https://github.com/Aboubaker001/Mouin-Telegram_bot#readme"
 }
