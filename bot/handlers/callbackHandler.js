@@ -107,9 +107,9 @@ export default async (ctx) => {
 // Handle content callbacks
 async function handleContentCallback(ctx, contentType) {
   const userId = ctx.from.id;
-  
+
   switch (contentType) {
-    case 'pdf':
+    case 'pdf': {
       const pdfMaterials = config.content.materials.filter(m => m.type === 'pdf');
       if (pdfMaterials.length > 0) {
         let message = "📄 *ملفات PDF:*\n\n";
@@ -123,8 +123,9 @@ async function handleContentCallback(ctx, contentType) {
         ctx.reply("❌ لا توجد ملفات PDF متاحة حالياً.");
       }
       break;
-      
-    case 'video':
+    }
+
+    case 'video': {
       const videoMaterials = config.content.materials.filter(m => m.type === 'video');
       if (videoMaterials.length > 0) {
         let message = "🎥 *الفيديوهات التعليمية:*\n\n";
@@ -138,8 +139,9 @@ async function handleContentCallback(ctx, contentType) {
         ctx.reply("❌ لا توجد فيديوهات متاحة حالياً.");
       }
       break;
-      
-    case 'link':
+    }
+
+    case 'link': {
       const linkMaterials = config.content.materials.filter(m => m.type === 'link');
       if (linkMaterials.length > 0) {
         let message = "🔗 *الروابط المفيدة:*\n\n";
@@ -153,8 +155,9 @@ async function handleContentCallback(ctx, contentType) {
         ctx.reply("❌ لا توجد روابط متاحة حالياً.");
       }
       break;
-      
-    case 'image':
+    }
+
+    case 'image': {
       const imageMaterials = config.content.materials.filter(m => m.type === 'image');
       if (imageMaterials.length > 0) {
         let message = "🖼️ *الصور والرسوم:*\n\n";
@@ -168,9 +171,10 @@ async function handleContentCallback(ctx, contentType) {
         ctx.reply("❌ لا توجد صور متاحة حالياً.");
       }
       break;
-      
-    case 'all':
-      const message = "📚 *جميع المواد التعليمية:*\n\n";
+    }
+
+    case 'all': {
+      let message = "📚 *جميع المواد التعليمية:*\n\n";
       config.content.materials.forEach((material, index) => {
         const emoji = getContentEmoji(material.type);
         message += `${index + 1}. ${emoji} *${material.title}*\n`;
@@ -179,15 +183,17 @@ async function handleContentCallback(ctx, contentType) {
       });
       ctx.reply(message, { parse_mode: 'Markdown' });
       break;
-      
+    }
+
     case 'search':
       ctx.reply("🔍 استخدم الأمر /البحث متبوعاً بالكلمة المفتاحية للبحث في المحتوى.");
       break;
-      
+
     default:
       ctx.reply("❌ نوع محتوى غير معروف.");
   }
 }
+
 
 // Handle schedule callbacks
 async function handleScheduleCallback(ctx, scheduleAction) {
@@ -266,15 +272,15 @@ async function handleAdminCallback(ctx, adminAction) {
       break;
       
     case 'stats':
-      ctx.reply("📊 استخدم الأمر /إحصائيات لعرض إحصائيات المجموعة.");
+      ctx.reply("📊 استخدم الأمر /stats إحصائيات المجموعة.");
       break;
       
     case 'ban':
-      ctx.reply("🚫 استخدم الأمر /حظر متبوعاً بمعرف المستخدم لحظر مستخدم.");
+      ctx.reply("🚫 استخدم الأمر /ban متبوعاً بمعرف المستخدم لحظر مستخدم.");
       break;
       
     case 'unban':
-      ctx.reply("✅ استخدم الأمر /إلغاء_حظر متبوعاً بمعرف المستخدم لإلغاء حظر مستخدم.");
+      ctx.reply("✅ استخدم الأمر /unban متبوعاً بمعرف المستخدم لإلغاء حظر مستخدم.");
       break;
       
     default:
@@ -289,17 +295,17 @@ async function handleStatsCallback(ctx, statsAction) {
   switch (statsAction) {
     case 'detailed':
       if (isUserAdmin(userId)) {
-        ctx.reply("📊 استخدم الأمر /إحصائيات_مفصلة لعرض تقرير مفصل.");
+        ctx.reply("📊 استخدم الأمر /detailed لعرض تقرير مفصل.");
       } else {
-        ctx.reply("📊 استخدم الأمر /إحصائياتي لعرض إحصائياتك الشخصية.");
+        ctx.reply("📊 استخدم الأمر /detailed لعرض إحصائياتك الشخصية.");
       }
       break;
       
     case 'member':
       if (isUserAdmin(userId)) {
-        ctx.reply("👥 استخدم الأمر /قائمة_الأعضاء لعرض قائمة الأعضاء.");
+        ctx.reply("👥 استخدم الأمر /member لعرض قائمة الأعضاء.");
       } else {
-        ctx.reply("❌ هذه الميزة متاحة للمدربين فقط.");
+        ctx.reply("❌ هذه الميزة متاحة للمشرفين فقط.");
       }
       break;
       
@@ -313,17 +319,17 @@ async function handleStatsCallback(ctx, statsAction) {
       
     case 'activity':
       if (isUserAdmin(userId)) {
-        ctx.reply("📈 استخدم الأمر /تحليل_النشاط لعرض تحليل النشاط.");
+        ctx.reply("📈 استخدم الأمر /activity لعرض تحليل النشاط.");
       } else {
-        ctx.reply("📈 استخدم الأمر /نشاطي لعرض نشاطك الشخصي.");
+        ctx.reply("📈 استخدم الأمر /MyActivity نشاطك الشخصي.");
       }
       break;
       
     case 'export':
       if (isUserAdmin(userId)) {
-        ctx.reply("📤 استخدم الأمر /تصدير_البيانات لتصدير البيانات.");
+        ctx.reply("📤 استخدم الأمر /export لتصدير البيانات.");
       } else {
-        ctx.reply("❌ هذه الميزة متاحة للمدربين فقط.");
+        ctx.reply("❌ هذه الميزة متاحة للمشرفين فقط.");
       }
       break;
       
@@ -402,7 +408,7 @@ async function showNextSession(ctx) {
 
 // Show admin menu
 async function showAdminMenu(ctx) {
-  const message = `🔧 *لوحة تحكم المدرب*
+  const message = `🔧 *لوحة تحكم المشرف*
 
 اختر من الخيارات التالية:`;
   

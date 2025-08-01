@@ -4,6 +4,25 @@
     "username": "بدون اسم",
     "firstName": "أبـــو حــ𓂆ــذيــفـــة",
     "lastName": "",
-    "registeredAt": "2025-07-31T16:03:11.404Z"
+    "registeredAt": "2025-07-31T16:03:11.404Z",
+    "isVerified": true,
+    "verifiedAt": "2025-08-01T15:52:46.089Z",
+    "remindersEnabled": false
+  },
+  {
+    "id": 7778008989,
+    "username": "abou_elbaraa16",
+    "firstName": "⊹ أبــو الـ𓂆ــــبراء",
+    "lastName": "⊹",
+    "registeredAt": "2025-08-01T15:25:07.459Z",
+    "isVerified": true,
+    "isAdmin": false,
+    "warnings": 0,
+    "isMuted": false,
+    "muteExpiry": null,
+    "remindersEnabled": true,
+    "lastActivity": "2025-08-01T15:25:07.459Z",
+    "joinDate": "2025-08-01T15:25:07.459Z",
+    "verifiedAt": "2025-08-01T15:51:50.837Z"
   }
 ]

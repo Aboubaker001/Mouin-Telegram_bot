@@ -46,23 +46,32 @@ export function registerUser(user) {
 
 // Verify user with subscription code
 export function verifyUser(userId, subscriptionCode) {
+  console.log('📥 تم استدعاء verifyUser');
+  console.log('🔑 الرمز المستلم:', subscriptionCode);
+  console.log('🔐 الرمز المتوقع:', config.users.subscriptionCode);
+
   if (subscriptionCode !== config.users.subscriptionCode) {
+    console.log('❌ الرمز غير مطابق!');
     return { success: false, message: "رمز الاشتراك غير صحيح" };
   }
-  
+
   const users = getAllUsers();
   const userIndex = users.findIndex(user => user.id === userId);
-  
+
   if (userIndex === -1) {
+    console.log('❌ المستخدم غير موجود في قاعدة البيانات');
     return { success: false, message: "المستخدم غير موجود" };
   }
-  
+
   users[userIndex].isVerified = true;
   users[userIndex].verifiedAt = new Date().toISOString();
   writeJSON(USERS_FILE, users);
-  
+
+  console.log('✅ المستخدم تم التحقق منه:', users[userIndex]);
+
   return { success: true, user: users[userIndex] };
 }
+
 
 // Check if user is verified
 export function isUserVerified(userId) {

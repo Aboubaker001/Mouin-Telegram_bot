@@ -19,12 +19,34 @@ export default async (ctx) => {
     const result = registerUser(user);
     
     if (result.success) {
-      ctx.reply("✅ تم تسجيلك بنجاح لتلقي التذكيرات والإشعارات.");
+      await ctx.reply("✅ تم تسجيلك بنجاح لتلقي التذكيرات والإشعارات.");
     } else {
-      ctx.reply("📌 أنت مسجّل مسبقًا في النظام.");
+      await ctx.reply("📌 أنت مسجّل مسبقًا في النظام.");
     }
-    
-    ctx.reply(welcomeMessage);
+
+    // رسالة الترحيب العامة
+    await ctx.reply(welcomeMessage);
+
+    // قائمة الأوامر بالأزرار (inline keyboard)
+    await ctx.reply("📌 اختر من القائمة التالية:", {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: "📚 المحتوى", callback_data: "content_all" },
+            { text: "📅 الجدول", callback_data: "schedule_show" }
+          ],
+          [
+            { text: "⏰ التذكير", callback_data: "enable_reminders" },
+            { text: "❓ الأسئلة", callback_data: "faq_help" }
+          ],
+          [
+            { text: "🧪 اختبار", callback_data: "quiz_start" },
+            { text: "📊 إحصائياتي", callback_data: "stats_personal" }
+          ]
+        ]
+      }
+    });
+
   } catch (error) {
     console.error("Error in start command:", error);
     ctx.reply("❌ حدث خطأ أثناء التسجيل. الرجاء المحاولة مرة أخرى.");

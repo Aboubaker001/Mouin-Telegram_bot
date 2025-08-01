@@ -5,32 +5,34 @@ import config from '../../config.js';
 export default async (ctx) => {
   try {
     const userId = ctx.from.id;
-    const args = ctx.message.text.split(' ').slice(1);
-    
-    // Check if user is already verified
+    const text = ctx.message?.text || ctx.update?.message?.text || '';
+    const args = text.split(' ').slice(1);
+
+    console.log('🔐 تحقق: userId =', userId);
+    console.log('📩 نص الأمر:', text);
+
+    // التحقق من إذا كان المستخدم موثّق مسبقًا
     if (isUserVerified(userId)) {
-      return ctx.reply("✅ أنت مسجل ومتحقق بالفعل!");
+      return ctx.reply("✅ أنت متحقق بالفعل!");
     }
-    
-    // Check if subscription code is provided
+
+    // التحقق من وجود الرمز
     if (args.length === 0) {
       return ctx.reply(verificationMessage);
     }
-    
+
     const subscriptionCode = args[0];
     const result = verifyUser(userId, subscriptionCode);
-    
+
     if (result.success) {
       ctx.reply(successMessages.userVerified);
-      
-      // Send welcome message with course info
-      const nextSession = getNextSession();
-      const welcomeMsg = `🎉 مرحبًا بك في دورة ${config.course.name}! 🚀
 
-أنت الآن جزء من مجتمع التعلم
-📅 الجلسة القادمة: ${nextSession}
-🔗 رابط الزوم: ${config.zoom.fullLink}
-📌 تحقق من التعليمات المثبتة وابدأ رحلتك! 💪
+      const nextSession = getNextSession();
+      const welcomeMsg = `${config.messages.welcome.title.replace('{courseName}', config.course.name)}
+
+${config.messages.welcome.body
+  .replace('{nextSession}', nextSession)
+  .replace('{zoomLink}', config.zoom.fullLink)}
 
 📌 استخدم هذه الأوامر:
 /المحتوى - عرض المواد التعليمية
@@ -39,28 +41,42 @@ export default async (ctx) => {
 /أسئلة - الأسئلة الشائعة
 
 🚀 ابدأ رحلتك التعليمية! 💻`;
-      
-      ctx.reply(welcomeMsg);
+
+      return ctx.reply(welcomeMsg);
     } else {
-      ctx.reply(errorMessages.verificationFailed);
+      return ctx.reply("❌ رمز الاشتراك غير صحيح.");
     }
   } catch (error) {
-    console.error("Error in verify command:", error);
-    ctx.reply("❌ حدث خطأ أثناء التحقق. الرجاء المحاولة مرة أخرى.");
+    console.error("❌ Error in /تحقق:", error);
+    return ctx.reply("حدث خطأ أثناء محاولة التحقق. حاول مجددًا.");
   }
 };
 
-// Helper function to get next session info
+// استخراج الجلسة القادمة
 function getNextSession() {
   const now = new Date();
-  const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-  const today = days[now.getDay()];
-  
-  // Find next session
-  const nextSession = config.schedule.sessions.find(session => {
-    const sessionDay = session.day;
-    return sessionDay !== today; // For now, just return the first session
-  }) || config.schedule.sessions[0];
-  
-  return `${nextSession.day} - ${nextSession.time}`;
+  const daysMap = {
+    'الأحد': 0, 'الاثنين': 1, 'الثلاثاء': 2,
+    'الأربعاء': 3, 'الخميس': 4, 'الجمعة': 5, 'السبت': 6
+  };
+
+  const sessions = config.schedule.sessions.map((s) => ({
+    ...s,
+    dayIndex: daysMap[s.day] ?? 0
+  }));
+
+  sessions.sort((a, b) => a.dayIndex - b.dayIndex);
+
+  for (const session of sessions) {
+    const dayDiff = (session.dayIndex + 7 - now.getDay()) % 7;
+    const sessionDate = new Date(now);
+    sessionDate.setDate(now.getDate() + dayDiff);
+    sessionDate.setHours(parseInt(session.time.split(':')[0]), parseInt(session.time.split(':')[1]));
+
+    if (sessionDate > now) {
+      return `${session.day} - ${session.time}`;
+    }
+  }
+
+  return `${sessions[0].day} - ${sessions[0].time}`;
 }

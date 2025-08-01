@@ -69,14 +69,14 @@ export const config = {
     verificationTimeout: 300, // 5 minutes in seconds
     maxWarnings: 3,
     muteDuration: 3600, // 1 hour in seconds
-    subscriptionCode: "COURSE2024"
+    subscriptionCode: "OUMA_1447"
   },
 
   // Admin Configuration
   admin: {
-    userIds: [], // Add admin user IDs here
-    groupId: "", // Main group ID
-    supportChannel: "@course_support"
+    userIds: [7782407251, 7778008989], // Add admin user IDs here
+    groupId: "-1002733159355", // Main group ID
+    supportChannel: "@deenwatine"
   },
 
   // Messages and Templates

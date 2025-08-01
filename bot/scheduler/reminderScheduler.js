@@ -1,6 +1,6 @@
 import cron from 'node-cron';
 import { format, addMinutes, isToday, getDay } from 'date-fns';
-import { ar } from 'date-fns/locale';
+import ar from 'date-fns/locale/ar/index.js'
 import { getUsersWithReminders, getAllUsers, updateUserActivity } from '../services/userService.js';
 import { sessionReminder } from '../helpers/messages.js';
 import { readJSON, writeJSON } from '../utils/database.js';
